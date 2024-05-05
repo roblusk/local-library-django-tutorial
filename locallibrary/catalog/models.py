@@ -94,3 +94,19 @@ class Author(models.Model):
         return reverse('author-detail', args = [str(self.id)])
     def __str__(self) -> str:
         return f'{self.last_name}, {self.first_name}'
+
+class Language(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                Lower('name'),
+                name='genre_name_case_insensitive_unique',
+                violation_error_message = "Language already exists (case insensitive match)"
+            )
+        ]
+    
+    def __str__(self) -> str:
+        return self.name
+    def get_absolute_url(self):
+        return reverse('language-detail', args = [str(self.id)])
