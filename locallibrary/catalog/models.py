@@ -16,7 +16,6 @@ class Genre(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        """Returns the url to access a particular genre instance."""
         return reverse('genre-detail', args=[str(self.id)])
     
     class Meta:
@@ -91,7 +90,7 @@ class Author(models.Model):
     class Meta:
         ordering = ['last_name', 'first_name']
 
-        def get_absolute_url(self):
-            return reverse('author-detail', args = [str(self.id)])
-        def __str__(self) -> str:
-            return f'{self.last_name}, {self.first_name}'
+    def get_absolute_url(self):
+        return reverse('author-detail', args = [str(self.id)])
+    def __str__(self) -> str:
+        return f'{self.last_name}, {self.first_name}'
