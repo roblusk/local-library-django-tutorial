@@ -62,8 +62,10 @@ for _ in range(50):
     book.save()
 print(f"There are now {Book.objects.count()} books in the database.")
 
-books = Book.objects.all()
+
 # Create 250 book instances
+books = Book.objects.all()
+BookInstance.objects.all().delete()
 for _ in range(250):
     book = random.choice(books)
     imprint = fake.unique.random_number(digits=5)
@@ -71,6 +73,10 @@ for _ in range(250):
         [None,
         fake.date_time_this_year(before_now=False, after_now=True)
         ])
-    book_instance = BookInstance(book=book, imprint=imprint, due_back=due_back)
+    if due_back:
+        status = 'o'
+    else:
+        status = random.choice(['m','a','r'])
+    book_instance = BookInstance(book=book, imprint=imprint, due_back=due_back, status=status)
     book_instance.save()
 print(f"There are now {BookInstance.objects.count()} book instances in the database.")
