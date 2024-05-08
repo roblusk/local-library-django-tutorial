@@ -22,11 +22,16 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
-def books_list(request):
-    available_books = Book.objects.filter(bookinstance__status__exact='a').distinct()
+# def books_list(request):
+#     available_books = Book.objects.filter(bookinstance__status__exact='a').distinct()
+#     context = {
+#         'available_books': available_books
+#     }
+#     return render(request, 'books_list.html', context=context)
 
-    context = {
-        'available_books': available_books
-    }
+from django.views import generic
+class BookListView(generic.ListView):
+    model=Book
 
-    return render(request, 'books_list.html', context=context)
+class BookDetailView(generic.DetailView):
+    model = Book
