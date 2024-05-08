@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Book List</h1>
-
+    <h1>Books</h1>
+    <p><a href="{% url 'book-create' %}">Add a book</a></p>
     {% if book_list %}
     <ul>
         {% for book in book_list %}
