@@ -3,6 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 from .models import Book, Author, BookInstance, Genre
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def index(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
@@ -36,7 +39,8 @@ class BookListView(generic.ListView):
 class BookDetailView(generic.DetailView):
     model = Book
 
-class AuthorListView(generic.ListView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+class AuthorListView(LoginRequiredMixin, generic.ListView):
     model=Author
     paginate_by = 10
 class AuthorDetailView(generic.DetailView):
