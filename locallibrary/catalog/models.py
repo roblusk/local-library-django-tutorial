@@ -6,6 +6,8 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
+from django.conf import settings
+from datetime import date
 
 class Genre(models.Model):
     """Model representing a book genre."""
@@ -73,7 +75,6 @@ class Book(models.Model):
     display_genre.short_description = 'Genre'
     
 import uuid
-
 class BookInstance(models.Model):
     id = models.UUIDField(
         primary_key=True,
@@ -98,6 +99,12 @@ class BookInstance(models.Model):
         default='m',
         help_text='Book availablity'
     )
+
+    borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+
+    @property
+    def is_overdue(self):
+        return bool(self.due_back and date.today() > self.due_back)
 
     class Meta:
         ordering = ['due_back']
