@@ -21,3 +21,12 @@ def index(request):
     }
 
     return render(request, 'index.html', context=context)
+
+def books_list(request):
+    available_books = Book.objects.filter(bookinstance__status__exact='a').distinct()
+
+    context = {
+        'available_books': available_books
+    }
+
+    return render(request, 'books_list.html', context=context)
