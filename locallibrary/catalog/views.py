@@ -34,6 +34,7 @@ from django.views import generic
 class BookListView(generic.ListView):
     model=Book
     paginate_by = 10
+    template_name = "../../templates/catalog/book_list.html"
 class BookDetailView(generic.DetailView):
     model = Book
 
@@ -41,8 +42,8 @@ def book_create(request):
     if request.method == "POST":
         form = BookForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("books")
+            book = form.save()
+            return redirect("book-detail", pk=book.pk)
     else:
         form = BookForm()
     
