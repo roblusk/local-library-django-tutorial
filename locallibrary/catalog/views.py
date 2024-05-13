@@ -51,6 +51,20 @@ def book_create(request):
 
     return render(request, "catalog/book_form.html", context=context)
 
+def book_update(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.method == "POST":
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            book = form.save()
+            return redirect("book-detail", pk=book.pk)
+    else:
+        form = BookForm(instance=book)
+    
+    context = {"form": form}
+
+    return render(request, "catalog/book_form.html", context=context)
+
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 class AuthorListView(LoginRequiredMixin, generic.ListView):
