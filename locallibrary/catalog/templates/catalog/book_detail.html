@@ -25,9 +25,6 @@
     </div>
 
     <a href="{% url 'book-update' book.pk %}">Update Book</a>
-    <form action="{% url 'book-delete' book.pk %}" method="post">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-danger" value="Delete">
-    </form>
+    <a href="{% url 'book-delete' book.pk %}">Delete Book</a>
 
 {% endblock %}
