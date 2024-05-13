@@ -30,7 +30,7 @@ def index(request):
 #     context = {
 #         'available_books': available_books
 #     }
-#     return render(request, 'books_list.html', context=context)
+#     return render(request, 'books_list.html', context=context)90
 
 from django.views import generic
 class BookListView(generic.ListView):
